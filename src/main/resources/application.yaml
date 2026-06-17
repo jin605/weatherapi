@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: weatherapi
+  output:
+    ansi:
+      enabled: always

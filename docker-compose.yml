@@ -1,0 +1,10 @@
+services:
+  weather-api:
+    build: .
+    container_name: weather-api
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: Asia/Seoul
+      SPRING_OUTPUT_ANSI_ENABLED: always
+    restart: unless-stopped
