@@ -4,7 +4,30 @@ services:
     container_name: weather-api
     ports:
       - "8080:8080"
+    depends_on:
+      - postgres
     environment:
       TZ: Asia/Seoul
       SPRING_OUTPUT_ANSI_ENABLED: always
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/weatherapi
+      SPRING_DATASOURCE_USERNAME: weather
+      SPRING_DATASOURCE_PASSWORD: weather
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
     restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: weather-api-postgres
+    environment:
+      POSTGRES_DB: weatherapi
+      POSTGRES_USER: weather
+      POSTGRES_PASSWORD: weather
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    mem_limit: 256m
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
